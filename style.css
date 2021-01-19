@@ -4,3 +4,12 @@
 .small{
     font-size: smaller;
 }
+.red{
+    color:red;
+}
+.green{
+    color: rgb(54, 170, 64);
+}
+.itemWrapper{
+    margin:3rem
+}
