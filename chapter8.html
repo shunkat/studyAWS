@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chapter8</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>DBを使ったブログシステムの構築</h1>
+    <h2>目次</h2>
+    <ol>
+        <li>DBサーバーにMariaDBを構築</li>
+        <li>WebサーバーにWordPressをインストール</li>
+        <li>WordPressの初期設定</li>
+        
+    </ol>
+    <div class="box">
+        MySQLとMariaDB
+        <br>MariaDBはMySQLの開発者が枝分かれして開発を始めたオープンソースの五感データベースです
+        <br>AmazonLinux2にはMariaDBがパッケージとしてふくまれているのでMariaDBをつかうだけで似てます
+    </div>
+    <div class="sectionWrapper">
+        <h2>DBサーバーにMariaDBをインストール</h2>
+        Webサーバを踏み台にしてDBサーバーにログインした状態で
+        <br>sudo yum -y install mariadb-server
+        <br>を実行します
+        <div class="box">ここで注意なのがどうやら本ではmariaDBとなっているが、mariadbのように小文字にしないと反応しないこと</div>
+        <h2>MariaDBの起動と初期設定</h2>
+        sudo systemctl start mariadb
+        <br>コマンドで起動します
+        <br>mysqladmin -u root password
+        <br>このコマンドでrootユーザーのパスワードを"sampleMaria"に変更します
+
+    </div>
+    <div class="sectionWrapper">
+        <h2>WordPress用のデータベースを作成</h2>
+        mysql -u root -p
+        <br>コマンドでrootユーザーとしてDBに接続
+        <br>するとDBのコマンドプロンプトが出現します
+        <h2>設定用のSQLを書く</h2>
+        CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+        <br>コマンドでwordpressという名前のデータベースが作成されました
+        <h3>ユーザー作成</h3>
+        wordpressというユーザーを作成し、wordpresspasswdというパスワードを設定するために
+        <br>grant all on wordpress.* to wordpress@"%" identified by 'wordpresspasswd';
+        <br>というコマンドでwordpressユーザーにwordpressデータベースのすべてのアクセス権を与えています
+        <br>上記を反映させるために
+        <br>flush privileges;
+        <br>コマンドを打ちます
+        <br>最後に確認として、
+        <br>
+        select user, host from mysql.user;
+        <br>を実行します
+        <br>終わったら exitでMariaDBコマンドを終了します
+        <div class="box">
+            <h4>自動起動するように構成する</h4>
+            sudo systemctl enable mariadb
+            <br>これで自動起動するようになります
+        </div>
+    </div>
+    <div class="sectionWrapper">
+        <h2>WebサーバーにWordPressをインストールします</h2>
+        <div class="itemWrapper">
+            <ol>
+                <li>
+                    Wordpressの最新版が動くようにPHPをアップデートします
+                    <br>その前にctrl+dでWEBサーバー上に戻っておきましょう
+                    <br>sudo amazon-linux-extras install php7.3
+                </li>
+                <li>
+                    各種ライブラリをインストールします
+                    <br>sudo yum -y install php php-mbstring
+                    
+                </li>
+                <li>
+                    sudo yum install mariadb-server
+                    <br>これはmariaDBコマンドをインストール
+                </li>
+                <li>
+                    mysql -h 10.0.2.10 -u wordpress -P
+                    <br>これでwordpress ユーザーで接続するという意味です
+                </li>
+                <li>接続できたらexitと入力して終了してね</li>
+
+            </ol>
+
+        </div>
+        <div class="itemWrapper">
+            <h3>WordPressのダウンロード</h3>
+            実行環境が整ったところでWordPressをインストールする。
+            <br>yumではダウンロードできないのでwget コマンドが必要
+            <br>cd ~
+            <br>wget https://ja.wordpress.org/latest-ja.tar.gz
+        
+
+        </div>
+        <div class="itemWrapper">
+            <h3>展開とインストール</h3>
+            tar xzvf latest-ja.tar.gz
+            <br>これでwordpressディレクトリができるのでそこに移動し、
+            <br>cd wordpress
+            <br>このディレクトリの中身がwordpressのブログラミ一式です、apacheから見える場所に配置しましょう。
+            /var/www/html/ディレクトリがデフォルトなのでそこらへんです
+            <br>sudo cp -r * /var/www/html
+            <br>そしたらこのファイルの所有者/グループをapache/apacheに変更します。
+            <br>sudo chown apache:apache /var/www/html -R
+
+        </div>
+        <div class="sectionWrapper">
+            <h2>WordPressを設定する</h2>
+            <ol>
+                <li>Apacheの起動</li>
+                <div class="code">sudo systemctl start httpd</div>
+                すでに起動している場合は
+                <div class="code">sudo systemctl restart httpd</div>
+                <li>WordPressの初期設定</li>
+                ウェブサーバーのインスタンスのIPアドレスを調べてブラウザからログインしましょう
+                ここでデータベース情報は
+                <br>
+                ・データベース名wordpress
+                <br>
+                ・ユーザー名wordpress<br>・パスワードwordpresspasswd<br>・データベースのホスト名10.0.2.10<br>・テーブル接頭辞wp_（デフォルトのまま）
+                <div class="box">DBサーバーを起動し直しましょう</div>
+                インストールを実行をクリックして、最後にサイトのタイトルや管理者のユーザー名パスワードを入力します
+                <br>管理者のユーザー名：admin <br>
+                これが済んだら再びWebサーバーにアクセスするとブログ画面が表示されます
+                <br>ここに先程のIDでログインすれば記事の投稿や各種管理ができます
+
+            </ol>
+        </div>
+        <div class="sectionWrapper">
+            <h2>まとめ</h2>
+            以上でwordpressを用いたブログシステムの構築は完了です
+            <br>ポイントとしてはインターネットに公開されているのはWebサーバだけで、DBサーバーはプライベートサブネットに配置してあるのでインターネットからのアクセス（攻撃）を受けません
+            <br>しかしNATゲートウェイを通じてインターネットに接続することはできるのでソフトウェアインストールやアップデート作業で不便を強いることもないのです
+            <br> 
+        </div>
+
+        </div>
+    </div>
+</body>
+</html>
