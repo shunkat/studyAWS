@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter5</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chapterWrapper">
+        <h1>HTTPの動きを確認する</h1>
+        普段、私達が利用しているウェブ通信はHTTPというプロトコルが使われています。
+        <br>
+        ４０４えらーや５００エラーなどはこのHTTPによって定められています
+        <div class="sectionWrapper section1">
+            クライアント・サーバー型のアーキテクチャで２者間でリクエストとレスポンスをやり取りするものです
+            <div class="itemWrapper">
+                
+                <h5>リクエスト</h5>
+                <ol>
+                    <li>
+                        リクエストライン
+                        <br>
+                        要求する方法と要求するURLがかかれています
+                    </li>
+                    <li>
+                        ヘッダーはブラウザから送信する追加情報です
+                        <br>
+                        例えば要求したいホスト名、ブラウザの種類、cookieの情報、直前に見ていたページのURLなどです
+                    </li>
+
+                    <li>
+                        ボディ
+                        <br>
+                        HTMLフォームやAjaxなどでPOSTメソッドを利用しデータをサーバーに送信するときに使います    
+                    </li>
+                </ol>
+                <h5>レスポンス</h5>
+                <ol>
+                    <li>
+                        ステータスラインは要求の成否を返すものです
+                        <br>
+                        正常に終了すれば２００OKが返されます
+                        <br>
+                        失敗すると４０４や５００のエラー情報が返されます 
+                    </li>
+                    <li>ヘッダーは追加情報を返します</li>
+                    <li>ボディはコンテンツを返します</li>
+                </ol>
+            </div>
+        </div>
+        <div class="sectionWrapper section2">
+            <h2>ブラウザの開発者ツールで見てみる</h2>
+            <div class="itemWrapper item1">
+                <h3>メソッド</h3>
+                <ul>
+                    <li>GET
+                        <br>
+                        画像などのコンテンツを取得するためのメソッドです
+                    </li>
+                    <li>
+                        POST
+                        <br>
+                        フォームなどでデータを送信するときにボディ部にデータをいれて贈ります
+                    </li>
+                </ul>
+            </div>
+            <div class="itemWrapper item2">
+                <h3>ステータスコード</h3>
+                成功したかどうかを表す200OKや301リダイレクトなどが表示されます
+            </div>
+            <div class="box">
+                HTTPからHTTPSへのリダイレクトも３０１リダイレクトを使って行われます
+
+            </div>
+            <div class="itemWrapper">
+                <h3>リクエストヘッダー</h3>
+                代表例としては要求を贈ろうとするホストの情報を記述します
+                <h3>User-Agentヘッダー</h3>
+                WEBしすてむを構築するときはこの文字列をもとにブラウザやOSを判断して条件分岐を実装することもあります
+                <h3>Cookieヘッダー</h3>
+                サーバー側から以前にSet-Cookieヘッダーで送信されてきたものと同じデータをそのまま返します
+                <br>
+                例えばユーザーのログイン情報を保存するときに使われます
+                <h3>レスポンスヘッダー</h3>
+                サーバーからクライアントに返すときに送信される情報です
+                <h3>レスポンスヘッダー</h3>
+                <ul>
+                    <li>Content-typeヘッダー
+                        <br>コンテンツの種類を示します。これによって各クライアントはどのプログラムでそのファイルを開くかどうかきめています
+                    </li>
+                    <li>Dateヘッダー</li>
+                    <li>Set-cookieヘッダー</li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="sectionWrapper section3">
+            <h2>Telnetを使ってHTTPを喋ってみる</h2>
+            自分でHTTPプロトコルを使って通信することもできます
+            <br>
+            そのために】必要なのはTelnetクライアントだけです
+            <br>
+            <div class="box">
+                <h3>Telnetとは</h3>
+                汎用的な双方向８ビット通信を提供する端末間およびプロセス間の通信プロトコルでリモートコンピュータと通信するための仕組みです
+                <br>
+                普通だとTelnetサーバーにしかアクセスできませんが、接続先を変更すると任意のサービスに接続することができます。
+                <br>
+                80番（HTTPのウェルノウンポート）で接続してHTTPプロトコルに従ったデータを送ればサーバーからHTTPレスポンスを得ることができます
+                <strong>実際にやってみよう</strong>
+                <br>
+                
+            </div>
+        </div>
+        <div class="sectionWrapper section4">
+            <h2>まとめ</h2>
+            やったこと
+            <ol>
+                <li>開発者ツールを使ってプロトコル概要を知り</li>
+                <li>Telnetクライアントを使ってHTTPプロトコルで通信</li>
+                
+            </ol>
+            API開発の現場ではHTTPの理解は必須です。
+        </div>
+    </div>
+</body>
+</html>
