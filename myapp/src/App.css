@@ -1,38 +1,115 @@
-.App {
-  text-align: center;
+*{
+    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro", "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "メイリオ", sans-serif;
+}
+.box{
+    border: 1px solid;
+}
+.small{
+    font-size: smaller;
+
+}
+.red{
+    color:red;
+}
+.green{
+    color: rgb(54, 170, 64);
+}
+.itemWrapper{
+    margin:3rem;
+}
+.code{
+    background-color: rgb(119, 119, 119);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* 表系 */
+table{
+    width: 100%;
+    border-collapse: collapse;
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  table tr{
+    background-image: linear-gradient(40deg, #fce043 0%, #fb7ba2 74%);
   }
-  to {
-    transform: rotate(360deg);
+
+  table tr:last-child *{
+    border-bottom: none;
   }
-}
+
+  table th,table td{
+    text-align: center;
+    border: solid 2px #fff;
+    color: white;
+    padding: 10px 0;
+  }
+  /* 見出し系 */
+  h1 {
+    font-family: 'ヒラギノ明朝 Pro W3', 'Hiragino Mincho Pro', 'Hiragino Mincho ProN', 'HGS明朝E', 'ＭＳ Ｐ明朝', serif;
+    position: relative;
+    padding: 1.5rem 2rem;
+    -webkit-box-shadow: 0 2px 14px rgba(0, 0, 0, .1);
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .1);
+  }
+
+  h1:before,
+  h1:after {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    content: '';
+    background-image: -webkit-linear-gradient(315deg, #704308 0%, #ffce08 40%, #e1ce08 60%, #704308 100%);
+    background-image: linear-gradient(135deg, #704308 0%, #ffce08 40%, #e1ce08 60%, #704308 100%);
+  }
+
+  h1:before {
+    top: 0;
+  }
+
+  h1:after {
+    bottom: 0;
+  }
+
+  h2 {
+    position: relative;
+    padding: 1rem 2rem calc(1rem + 10px);
+    background: #fff100;
+  }
+
+
+  h2:before {
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 100%;
+    height: 100%;
+    content: '';
+    border: 4px solid #000;
+  }
+  h3 {
+    padding: 1rem 2rem;
+    color: #fff;
+    background-image: -webkit-gradient(linear, left top, right top, from(#fa709a), to(#fee140));
+    background-image: -webkit-linear-gradient(left, #fa709a 0%, #fee140 100%);
+    background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
+  }
+
+  ul, ol {
+    padding: 0;
+    position: relative;
+  }
+
+  ul li, ol li {
+    color: black;
+    border-left: solid 8px orange;/*左側の線*/
+    background: whitesmoke;/*背景色*/
+    margin-bottom: 5px;/*下のバーとの余白*/
+    line-height: 1.5;
+    border-radius: 0 15px 15px 0;/*右側の角だけ丸く*/
+    padding: 0.5em;
+    list-style-type: none!important;
+  }
+
+  .practice{
+    background-color: rgb(222, 252, 153);
+  }
+
